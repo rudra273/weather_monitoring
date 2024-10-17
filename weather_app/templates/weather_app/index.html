@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Monitoring Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>Weather Monitoring Dashboard</h1>
+    
+    <h2>Current Weather</h2>
+    <div class="weather-grid">
+        {% for city, data in latest_data.items %}
+            <div class="weather-card">
+                <h3>{{ city }}</h3>
+                <p>Temperature: {{ data.temp|floatformat:1 }}°C</p>
+                <p>Feels Like: {{ data.feels_like|floatformat:1 }}°C</p>
+                <p>Condition: {{ data.main }}</p>
+                <p>Last Updated: {{ data.timestamp }}</p>
+                <a href="{% url 'daily_summary' %}?city={{ city }}">View Daily Summary</a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <h2>Recent Alerts</h2>
+    <ul class="alert-list">
+        {% for alert in alerts %}
+            <li>
+                <strong>{{ alert.city }}</strong>: {{ alert.message }} ({{ alert.timestamp }})
+            </li>
+        {% empty %}
+            <li>No recent alerts.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Weather Summary - {{ city }}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>Daily Weather Summary - {{ city }}</h1>
+    
+    <img src="data:image/png;base64,{{ graph }}" alt="Temperature Trend">
+    
+    <table class="summary-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Average Temp</th>
+                <th>Max Temp</th>
+                <th>Min Temp</th>
+                <th>Dominant Condition</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for summary in summaries %}
+                <tr>
+                    <td>{{ summary.date }}</td>
+                    <td>{{ summary.avg_temp|floatformat:1 }}°C</td>
+                    <td>{{ summary.max_temp|floatformat:1 }}°C</td>
+                    <td>{{ summary.min_temp|floatformat:1 }}°C</td>
+                    <td>{{ summary.dominant_condition }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="{% url 'index' %}">Back to Dashboard</a>
+</body>
+</html>

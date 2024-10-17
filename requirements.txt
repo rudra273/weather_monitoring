@@ -1,0 +1,7 @@
+Django
+celery
+redis
+requests
+python-dotenv
+matplotlib
+
